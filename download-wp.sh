@@ -1,23 +1,43 @@
 #!/usr/bin/env sh
 
+
 IFS='    '
 
-cat SOURCES |
-while read region htmlurl ; do
 
+
+run_them ()
+{
+ cat SOURCES.txt | grep -v ^"#" | grep -v "$IFS"
+ if [ $? = 0 ]; then
+     echo "...
+At least one line is bogus!
+"
+     return 1
+ fi
+ [ ! -d html ] && mkdir html
+ cat SOURCES.txt | grep -v ^"#" | my_iteration
+ return $?
+}
+
+
+my_iteration ()
+{
+ while read region htmlurl ; do
 	html="html/$region.html"
 	svg="svg/$region.svg"
 	png="png/$region.png"
+	echo
+	echo "### Parsing $region, $svg"
 
 	if ! test -s "$html"; then
-		rm -f "$html" "$svg" "$png"
+		a_rm -f "$html" "$svg" "$png"
 		echo "Downloading:	$region	$htmlurl"
-		if ! wget -q -O "$html" "${htmlurl}"; then
-			echo "ERROR: failed downloading html: ${htmlurl}"
+		if ! a_wget -q -O "$html" "${htmlurl}"; then
+			echo "# ERROR: failed downloading html: ${htmlurl}"
 			continue
 		fi
 		if ! grep -q public_domain $html; then
-			echo "WARNING: flag NOT in public domain; check license"
+			echo "# WARNING: flag NOT in public domain; check license"
 		fi
 	fi
 
@@ -43,12 +63,12 @@ while read region htmlurl ; do
 	fi
 
 	if ! test -s "$png"; then
-		if ! rsvg-convert $svg > $png.tmp; then
+		if ! a_rsvg_convert $svg > $png.tmp; then
 			echo "ERROR rsvg-convert failed."
 			rm -f $png.tmp
 			continue
 		fi
-		if !  optipng -quiet $png.tmp; then
+		if ! a_optipng -quiet $png.tmp; then
 			echo "ERROR: optipng failed."
 			rm -f $png.tmp
 			continue
@@ -56,5 +76,42 @@ while read region htmlurl ; do
 			mv $png.tmp $png
 		fi
 	fi
+ done
+ return 0
+}
 
-done
+
+a_wget ()
+{
+ echo "wget $*"
+ return $?
+}
+
+
+a_rsvg_convert ()
+{
+ echo "rsvg-convert $*"
+ return $?
+}
+
+
+a_optipng ()
+{
+ echo "optipng $*"
+ return $?
+}
+
+
+a_rm ()
+{
+ echo "rm $*"
+ return $?
+}
+
+
+# Main script
+run_them
+RES=$?
+
+# Exit status
+exit $RES
