@@ -53,7 +53,7 @@ flags were resolved for the initial import:
 - The script `missing.sh` shows all such regions that we don't have flags for.
 - The script `make-aliases.sh` makes symlinks for regions that use flag of another
 region.
-- The script `download-wp.py` downloads missing flags from Wikipedia and generating
+- The script `download-wp.sh` downloads missing flags from Wikipedia and generating
 optimized SVG and PNG versions.
 
 You can use the [waveflag script from the Noto fonts project](https://code.google.com/p/noto/source/browse/color_emoji/waveflag.c)
@@ -66,6 +66,11 @@ to _wave_ PNG flags.
 - `rsvg-convert` part of [`librsvg`](https://wiki.gnome.org/Projects/LibRsvg)
 - [`optipng`](http://optipng.sourceforge.net/)
 
+# Displaying
+
+You can display considered regions (country-like list) by executing the following Python script:
+- `src/packreg/ianacountries.py`
+
 # Updating
 
 If new regions are needed, update `language-subtag-registry` from [IANA Language
@@ -77,10 +82,10 @@ editors to relicense it to public domain.  If the flag is not explicitly marked
 `public_domain` but otherwise exempt from Copyright (typically, because of
 national laws), make a note of it in file `COPYING`.
 
-To download missing flags, run `download-wp.py`.
+To download missing flags, run `download-wp.sh`.
 
 To update to latest flags from Wikipedia, delete the `html`, `svg`, and `png`
-directories, then run `make-aliases.sh` followed by `download-wp.py`.
+directories, then run `make-aliases.sh` followed by `download-wp.sh`.
 
 
 # License
