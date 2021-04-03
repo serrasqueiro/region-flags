@@ -23,3 +23,15 @@ git remote remove upstream
 git checkout master
 git fetch --all
 ```
+
+In case you have dangling branches on your local workspace with e.g. '.../remotes/origin/...', such as the ones that are shown by `git branch -a | grep /origin/`:
+```
+remotes/origin/HEAD -> origin/master
+remotes/origin/gh-pages
+remotes/origin/master
+remotes/origin/new/mydev
+remotes/origin/new/parot
+```
+you can get rid of the ones that have no equivalent on github; just do:
+- `git remote prune origin`
+
