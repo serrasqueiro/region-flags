@@ -97,5 +97,8 @@ See file `COPYING` for details.
 [2]: https://www.iso.org/obp/ui/#iso:code:3166:GB
 [3]: https://www.iso.org/obp/ui/#iso:code:3166:CA
 
-This repository ([region-flags](https://github.com/serrasqueiro/region-flags.git "region-flags at Serrasqueiro owner")) was forked originally from github [region-flags](https://github.com/serrasqueiro/region-flags "a Behdad's work").
-It uses the `master` branch as the principal branch (while original forked project used branch `gh-pages`).
+This repository ([region-flags](https://github.com/serrasqueiro/region-flags.git "region-flags at Serrasqueiro owner")) was forked originally from github [region-flags](https://github.com/behdad/region-flags "a Behdad's work").
+Here in this repo we use `master` branch as the principal branch (while original forked project used branch `gh-pages`).
+A word about branches:
+- `gh-pages` was the single branch in Behdad's work;
+- `new/mydev` -- will become the master branch; it does not contain any html file
