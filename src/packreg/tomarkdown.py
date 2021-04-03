@@ -39,11 +39,14 @@ def runner(args):
 
 
 def dump_to_markdown(outname, tuplist, dump=True) -> str:
+    # pylint: disable=duplicate-string-formatting-argument
     file_short = os.path.basename(outname)
     if file_short.endswith((".md", ".markdown")):
         file_short = ''.join(file_short.split('.')[:-1])
     assert file_short, "Empty name?!"
     text = f"""# {file_short} (markdown file)
+
+- [sorted by country](#sorted_by) / territory name
 
 ## Countries / Regions
 
@@ -53,22 +56,31 @@ def dump_to_markdown(outname, tuplist, dump=True) -> str:
         assert name, "Empty country description!?"
         #print(abbrev, name)
         hint = " (no SVG!)"
+        flat = hint
         svg_name = f"svg/{abbrev}.svg"
+        png_name = f"png/{abbrev}.png"
         if os.path.isfile(svg_name):
             hint = ' [(svg here)](./{} "{}")'.format(
                 svg_name,
                 name,
                 )
+            flat = ' `{}` ([svg](./{} "{}"), [png](./{} "{}"))'.format(
+                abbrev,
+                svg_name,
+                name,
+                png_name,
+                abbrev,
+                )
         linestr = f"- {abbrev} -- {name}{hint}\n"
         text += linestr
-        names[name] = f"- {name} --{hint}\n"
+        names[name] = f"- {name} --{flat}\n"
     if dump:
         print(text)
     text += """
-## Sorted by country name
+## <a name="sorted_by"></a>Sorted by country name
 
 """
-    for name in sorted(names):
+    for name in sorted(names, key=str.casefold):
         text += names[name]
     if not outname:
         return text
