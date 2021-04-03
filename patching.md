@@ -1,5 +1,8 @@
 # patching -- [region-flags](https://github.com/serrasqueiro/region-flags)
 
+You can download the reduced repository by cloning only one branch, called `mydev` (actually 'new/mydev'):
+- `git clone -b new/mydev --single-branch git@github.com:serrasqueiro/region-flags.git`
+
 Place yourself on the 'parot' branch, by doing:
 - `git checkout new/parot`
 
