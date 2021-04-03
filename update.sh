@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 set -ex
 
-python3 ./regions-wp.py > SOURCES
+python3 ./regions-wp.py > SOURCES.txt
 
-rm -rf html svg png
-mkdir -p html svg png
+#rm -rf html svg png
+#mkdir -p html svg png
 
 bash ./download-wp.sh
 bash ./make-aliases.sh
